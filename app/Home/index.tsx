@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Heading,
@@ -15,6 +15,7 @@ import {
   Flex,
   Button,
 } from "@chakra-ui/react";
+import { generateDummyData } from "@/utils/data";
 
 interface TableData {
   Timestamp: string;
@@ -48,6 +49,14 @@ const DataTable: React.FC<DataTableProps> = ({
   caption,
   pagination,
 }) => {
+   const [tableData,setTableData] = useState<TableData[]>([]);
+    useEffect(() => {
+    const Data = generateDummyData();
+    setTableData(Data);
+    },[]);
+
+    console.log(tableData,"setTableData");
+    
   return (
     <Box padding="2">
       <Flex align="center" justify="space-between">
@@ -75,11 +84,13 @@ const DataTable: React.FC<DataTableProps> = ({
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
-                <Td>35 min ago</Td>
-                <Td>2709936</Td>
-                <Td>username12@gmail.com</Td>
-                <Td>user 1</Td>
+              {
+               tableData?.map((entry,index)=>(
+                    <Tr key={index}>
+                       <Td>{entry.Timestamp}</Td>
+                <Td>{entry.PurchaseId}</Td>
+                <Td>{entry.Mail}</Td>
+                <Td>{entry.Name}</Td>
                 <Td></Td>
                 <Td>
                   <Text
@@ -90,7 +101,7 @@ const DataTable: React.FC<DataTableProps> = ({
                     fontWeight="700"
                     py="1"
                   >
-                    failed
+                    {entry.Status}
                   </Text>
                 </Td>
                 <Td>
@@ -98,7 +109,9 @@ const DataTable: React.FC<DataTableProps> = ({
                     Select
                   </Button>
                 </Td>
-              </Tr>
+                    </Tr>
+               ))
+              }
             </Tbody>
           </Table>
         </TableContainer>

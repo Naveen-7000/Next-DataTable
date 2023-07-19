@@ -9,16 +9,22 @@ interface TableData {
   [key: string]: string;
 }
 
+const generateRandomDate = (start: Date, end: Date): Date => {
+  return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+};
+
 export const generateDummyData = (): TableData[] => {
   const dummyData: TableData[] = [];
 
+  const startDate = new Date("2022-01-01");
+  const endDate = new Date();
+
   for (let i = 1; i <= 20; i++) {
-   const now = new Date();
-   now.setMinutes(now.getMinutes() - i);
-   const timestamp = now.toISOString();
+    // Generate a random timestamp between the start and end dates
+   const timestamp = generateRandomDate(startDate, endDate).toISOString();
 
    // Calculate the difference in hours and days
-   const diffInMilliseconds = now.getTime() - new Date(timestamp).getTime();
+   const diffInMilliseconds = new Date().getTime() - new Date(timestamp).getTime();
    const diffInHours = Math.floor(diffInMilliseconds / (1000 * 60 * 60));
    const diffInDays = Math.floor(diffInMilliseconds / (1000 * 60 * 60 * 24));
 

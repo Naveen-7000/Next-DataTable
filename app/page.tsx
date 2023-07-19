@@ -10,7 +10,7 @@ import TableShimmer from "@/components/TableShimmer";
 export default function Home() {
   const [rows, setRows] = useState<TableData[]>([]);
   const [searchWord, setSearchWord] = useState<string>("");
-  const [loading,setLoading] = useState<boolean>(false);
+  const [loading,setLoading] = useState<boolean>(true);
   const [headers, setHeaders] = useState<TableHeader[]>([
     { key: "Timestamp" },
     { key: "PurchaseId" },
@@ -24,6 +24,7 @@ export default function Home() {
   useEffect(() => {
     const Data = generateDummyData();
     setRows(Data);
+    setLoading(false);
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,14 +57,14 @@ export default function Home() {
 
   return (
     <Box p="4">
-      {
-        !loading && <TableShimmer />
-      }
       <Flex align="center" justify="space-between">
         <Heading>Results</Heading>
-        <Input type="text" variant='outline' placeholder='Search'value={searchWord} onChange={handleChange} htmlSize={10} width='auto' />
+        <Input type="text" variant='outline' placeholder='Search values'value={searchWord} onChange={handleChange} htmlSize={10} width='auto' />
       </Flex>
-      <DataTable pagination sortable headers={headers} rows={filteredRows} />
+      {
+        loading ? <TableShimmer headers={headers} /> 
+       : <DataTable pagination sortable headers={headers} rows={filteredRows} />
+      }
     </Box>
   );
 }

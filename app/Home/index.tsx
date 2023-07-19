@@ -18,7 +18,7 @@ import {
   Input
 } from "@chakra-ui/react";
 import { generateDummyData, PaginationData } from "@/utils/data";
-import { ArrowLeftIcon, ArrowRightIcon, SearchIcon } from "@chakra-ui/icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
 import { TableData, TableHeader, DataTableProps } from "@/utils/interfaces";
 
 const DataTable: React.FC<DataTableProps> = ({
@@ -112,7 +112,7 @@ const DataTable: React.FC<DataTableProps> = ({
           {pagination && (
             <Flex p="2" align="center" justify="space-between">
               <Button
-                leftIcon={<ArrowLeftIcon />}
+                leftIcon={<ChevronLeftIcon boxSize={6}/>}
                 onClick={handlePrevPage}
                 variant="outline"
               ></Button>
@@ -120,7 +120,7 @@ const DataTable: React.FC<DataTableProps> = ({
                 Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
               </span>
               <Button
-                rightIcon={<ArrowRightIcon />}
+                rightIcon={<ChevronRightIcon boxSize={6}/>}
                 onClick={handleNextPage}
                 variant="outline"
               ></Button>

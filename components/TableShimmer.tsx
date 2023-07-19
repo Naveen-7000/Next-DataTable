@@ -1,3 +1,4 @@
+"use client";
 import { Box, TableContainer, Table, Thead, Tbody, Skeleton, Stack, Tr, Th, Flex } from '@chakra-ui/react'
 import { TableHeader } from '@/utils/interfaces';
 

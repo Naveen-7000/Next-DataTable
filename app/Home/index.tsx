@@ -85,31 +85,29 @@ const DataTable: React.FC<DataTableProps> = ({
               </Tr>
             </Thead>
             <Tbody>
-              {currentEntries?.map((entry, index) => (
+              {currentEntries?.map((data, index) => (
                 <Tr key={index}>
-                  <Td>{entry.Timestamp}</Td>
-                  <Td>{entry.PurchaseId}</Td>
-                  <Td>{entry.Mail}</Td>
-                  <Td>{entry.Name}</Td>
-                  <Td></Td>
-                  <Td>
-                    <Text
-                      bg="#fed7d7"
-                      textAlign="center"
-                      rounded="20"
-                      textColor="black"
-                      fontWeight="700"
-                      py="1"
-                    >
-                      {entry.Status}
-                    </Text>
-                  </Td>
-                  <Td>
-                    <Button colorScheme="gray" shadow="sm">
-                      Select
-                    </Button>
-                  </Td>
-                </Tr>
+                <Td>{data.Timestamp}</Td>
+                <Td>{data.PurchaseId}</Td>
+                <Td>{data.Mail}</Td>
+                <Td>{data.Name}</Td>
+                <Td>{data.Source}</Td>
+                <Td>
+                  <Text
+                    bg={data.Status == "Failed" ? "#fed7d7" : data.Status === "Paid" ? "#c6f6d5" : "#fefcc0"}
+                    textAlign="center"
+                    rounded="20"
+                    textColor="black"
+                    fontWeight="700"
+                    py="1"
+                  >
+                    {data.Status}
+                  </Text>
+                </Td>
+                <Td>
+                  <Button colorScheme="gray" shadow="sm">Select</Button>
+                </Td>
+              </Tr>
               ))}
             </Tbody>
           </Table>

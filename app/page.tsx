@@ -5,7 +5,7 @@ import DataTable from "./Home";
 export default function Home() {
   return (
     <div>
-      <DataTable />
+      <DataTable pagination />
     </div>
   );
 }

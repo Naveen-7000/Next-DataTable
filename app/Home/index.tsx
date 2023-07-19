@@ -15,7 +15,8 @@ import {
   Flex,
   Button,
 } from "@chakra-ui/react";
-import { generateDummyData } from "@/utils/data";
+import { generateDummyData,PaginationData } from "@/utils/data";
+import { ArrowLeftIcon,ArrowRightIcon, ArrowUpDownIcon } from "@chakra-ui/icons";
 
 interface TableData {
   Timestamp: string;
@@ -50,11 +51,38 @@ const DataTable: React.FC<DataTableProps> = ({
   pagination,
 }) => {
    const [tableData,setTableData] = useState<TableData[]>([]);
+   const [currentPage, setCurrentPage] = useState(1);
+   const [sortOrder, setSortOrder] = useState("asc");
+
     useEffect(() => {
     const Data = generateDummyData();
     setTableData(Data);
     },[]);
+
+    const handleSort = () => {
+        setSortOrder(sortOrder === "asc" ? "desc" : "asc");
+      };
     
+      const sortedData = [...tableData].sort((a, b) => {
+        if (sortOrder === "asc") {
+            return a["Timestamp"].localeCompare(b["Timestamp"]);
+          } else {
+            return b["Timestamp"].localeCompare(a["Timestamp"]);
+          }
+      });
+
+    const {totalPages,currentEntries} = PaginationData(sortedData,currentPage,pagination);
+  
+   const handlePrevPage = () => {
+    if(currentPage === 1) return;
+    setCurrentPage((prevPage) => prevPage - 1);
+  };
+
+  const handleNextPage = () => {
+    if(currentPage === totalPages) return;
+    setCurrentPage((prevPage) => prevPage + 1);
+  };
+
   return (
     <Box padding="2">
       <Flex align="center" justify="space-between">
@@ -112,6 +140,15 @@ const DataTable: React.FC<DataTableProps> = ({
               }
             </Tbody>
           </Table>
+          {
+                pagination && <Flex p='2' align='center' justify='space-between'>
+                <Button leftIcon={<ArrowLeftIcon/>} onClick={handlePrevPage}  variant="outline">
+        </Button>
+        <span>{currentPage} - {totalPages}</span>
+        <Button rightIcon={<ArrowRightIcon />} onClick={handleNextPage} variant="outline">
+        </Button>
+                </Flex>
+          }
         </TableContainer>
       </Box>
     </Box>

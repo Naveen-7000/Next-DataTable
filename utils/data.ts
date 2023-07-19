@@ -13,7 +13,6 @@ export const generateDummyData = (): TableData[] => {
   const dummyData: TableData[] = [];
 
   for (let i = 1; i <= 20; i++) {
-   // Calculate the timestamp
    const now = new Date();
    now.setMinutes(now.getMinutes() - i);
    const timestamp = now.toISOString();

@@ -54,8 +54,6 @@ const DataTable: React.FC<DataTableProps> = ({
     const Data = generateDummyData();
     setTableData(Data);
     },[]);
-
-    console.log(tableData,"setTableData");
     
   return (
     <Box padding="2">

@@ -98,7 +98,7 @@ const DataTable: React.FC<DataTableProps> = ({
         >
           <Table variant="striped" colorScheme="blackAlpha" size="sm">
             {caption && <TableCaption>{caption}</TableCaption>}
-            <Thead>
+            <Thead onClick={sortable ? ()=>handleSort() : undefined} cursor={sortable ? "pointer" : "default"}>
               <Tr>
                 <Th>TIMESTAMP</Th>
                 <Th>PURCHASE ID</Th>

@@ -2,15 +2,15 @@
 
 import { generateDummyData } from "@/utils/data";
 import DataTable from "./Home";
-import { useEffect,useMemo,useState} from "react";
-import { TableData,TableHeader } from "@/utils/interfaces";
-import { Box,Flex,Heading, Input } from "@chakra-ui/react";
+import { useEffect, useMemo, useState } from "react";
+import { TableData, TableHeader } from "@/utils/interfaces";
+import { Box, Flex, Heading, Input } from "@chakra-ui/react";
 import TableShimmer from "@/components/TableShimmer";
 
 export default function Home() {
   const [rows, setRows] = useState<TableData[]>([]);
   const [searchWord, setSearchWord] = useState<string>("");
-  const [loading,setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   const [headers, setHeaders] = useState<TableHeader[]>([
     { key: "Timestamp" },
     { key: "PurchaseId" },
@@ -50,21 +50,27 @@ export default function Home() {
     return filteredTableData;
   }, [searchWord, rows]);
 
-  const filteredRows: TableData[] | [] = searchWord
-		? filterTableList
-		: rows;
-
+  const filteredRows: TableData[] | [] = searchWord ? filterTableList : rows;
 
   return (
-    <Box p="4">
+    <Box p="4" px="6">
       <Flex align="center" justify="space-between">
-        <Heading>Results</Heading>
-        <Input type="text" variant='outline' placeholder='Search values'value={searchWord} onChange={handleChange} htmlSize={10} width='auto' />
+        <Input
+          type="text"
+          variant="outline"
+          placeholder="Search values"
+          value={searchWord}
+          onChange={handleChange}
+          htmlSize={10}
+          width="auto"
+          borderWidth={3}
+        />
       </Flex>
-      {
-        loading ? <TableShimmer headers={headers} /> 
-       : <DataTable pagination sortable headers={headers} rows={filteredRows} />
-      }
+      {loading ? (
+        <TableShimmer headers={headers} />
+      ) : (
+        <DataTable pagination sortable headers={headers} rows={filteredRows} />
+      )}
     </Box>
   );
 }

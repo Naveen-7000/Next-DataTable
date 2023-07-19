@@ -14,12 +14,10 @@ import {
   Text,
   Flex,
   Button,
-  ButtonGroup,
-  Input
 } from "@chakra-ui/react";
-import { generateDummyData, PaginationData } from "@/utils/data";
+import { PaginationData } from "@/utils/data";
 import { ChevronLeftIcon, ChevronRightIcon } from "@chakra-ui/icons";
-import { TableData, TableHeader, DataTableProps } from "@/utils/interfaces";
+import { DataTableProps } from "@/utils/interfaces";
 
 const DataTable: React.FC<DataTableProps> = ({
   sortable,
@@ -30,7 +28,6 @@ const DataTable: React.FC<DataTableProps> = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState("asc");
-
 
   const handleSort = () => {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
@@ -63,28 +60,29 @@ const DataTable: React.FC<DataTableProps> = ({
   };
 
   return (
-      <Box mt="2">
-        <TableContainer
-          overflowX="hidden"
-          border="1px"
-          borderColor="lightgrey"
-          rounded="6"
-        >
-          <Table variant="striped" colorScheme="blackAlpha" size="sm">
-            {caption && <TableCaption>{caption}</TableCaption>}
-            <Thead
-              onClick={sortable ? () => handleSort() : undefined}
-              cursor={sortable ? "pointer" : "default"}
-            >
-              <Tr>
-                {headers?.map((header, index) => (
-                  <Th key={index}>{header.key}</Th>
-                ))}
-              </Tr>
-            </Thead>
-            <Tbody>
-              {currentEntries?.map((data, index) => (
-                <Tr key={index}>
+    <Box mt="2">
+      <TableContainer
+        overflowX="scroll"
+        border="1px"
+        borderColor="lightgrey"
+        rounded="6"
+        
+      >
+        <Table variant="striped" colorScheme="blackAlpha" size="sm">
+          {caption && <TableCaption>{caption}</TableCaption>}
+          <Thead
+            onClick={sortable ? () => handleSort() : undefined}
+            cursor={sortable ? "pointer" : "default"}
+          >
+            <Tr>
+              {headers?.map((header, index) => (
+                <Th key={index}>{header.key}</Th>
+              ))}
+            </Tr>
+          </Thead>
+          <Tbody>
+            {currentEntries?.map((data, index) => (
+              <Tr key={index}>
                 <Td>{data.Timestamp}</Td>
                 <Td>{data.PurchaseId}</Td>
                 <Td>{data.Mail}</Td>
@@ -92,7 +90,13 @@ const DataTable: React.FC<DataTableProps> = ({
                 <Td>{data.Source}</Td>
                 <Td>
                   <Text
-                    bg={data.Status == "Failed" ? "#fed7d7" : data.Status === "Paid" ? "#c6f6d5" : "#fefcc0"}
+                    bg={
+                      data.Status == "Failed"
+                        ? "#fed7d7"
+                        : data.Status === "Paid"
+                        ? "#c6f6d5"
+                        : "#fefcc0"
+                    }
                     textAlign="center"
                     rounded="20"
                     textColor="black"
@@ -103,31 +107,34 @@ const DataTable: React.FC<DataTableProps> = ({
                   </Text>
                 </Td>
                 <Td>
-                  <Button colorScheme="gray" shadow="sm">Select</Button>
+                  <Button colorScheme="twitter" shadow="sm">
+                    Select
+                  </Button>
                 </Td>
               </Tr>
-              ))}
-            </Tbody>
-          </Table>
-          {pagination && (
-            <Flex p="2" align="center" justify="space-between">
-              <Button
-                leftIcon={<ChevronLeftIcon boxSize={6}/>}
-                onClick={handlePrevPage}
-                variant="outline"
-              ></Button>
-              <span>
-                Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
-              </span>
-              <Button
-                rightIcon={<ChevronRightIcon boxSize={6}/>}
-                onClick={handleNextPage}
-                variant="outline"
-              ></Button>
-            </Flex>
-          )}
-        </TableContainer>
-      </Box>
+            ))}
+          </Tbody>
+        </Table>
+        {pagination && (
+          <Flex p="2" align="center" justify="space-between">
+            <Button
+              leftIcon={<ChevronLeftIcon boxSize={6} />}
+              onClick={handlePrevPage}
+              variant="outline"
+            ></Button>
+            <span>
+              Page <strong>{currentPage}</strong> of{" "}
+              <strong>{totalPages}</strong>
+            </span>
+            <Button
+              rightIcon={<ChevronRightIcon boxSize={6} />}
+              onClick={handleNextPage}
+              variant="outline"
+            ></Button>
+          </Flex>
+        )}
+      </TableContainer>
+    </Box>
   );
 };
 

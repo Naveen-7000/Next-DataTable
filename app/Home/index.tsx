@@ -59,6 +59,8 @@ const DataTable: React.FC<DataTableProps> = ({
     setCurrentPage((prevPage) => prevPage + 1);
   };
 
+  console.log(rows)
+
   return (
     <Box mt="2">
       <TableContainer
@@ -66,7 +68,6 @@ const DataTable: React.FC<DataTableProps> = ({
         border="1px"
         borderColor="lightgrey"
         rounded="6"
-        
       >
         <Table variant="striped" colorScheme="blackAlpha" size="sm">
           {caption && <TableCaption>{caption}</TableCaption>}
@@ -81,7 +82,7 @@ const DataTable: React.FC<DataTableProps> = ({
             </Tr>
           </Thead>
           <Tbody>
-            {currentEntries?.map((data, index) => (
+            { currentEntries?.map((data, index) => (
               <Tr key={index}>
                 <Td>{data.Timestamp}</Td>
                 <Td>{data.PurchaseId}</Td>
@@ -112,9 +113,17 @@ const DataTable: React.FC<DataTableProps> = ({
                   </Button>
                 </Td>
               </Tr>
-            ))}
+            ))
+                  }
           </Tbody>
         </Table>
+        {
+          !currentEntries?.length && (
+            <Flex justify="center" align="center" p="4">
+              <Text>No data found</Text>
+            </Flex>
+          )
+        }
         {pagination && (
           <Flex p="2" align="center" justify="space-between">
             <Button

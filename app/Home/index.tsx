@@ -14,9 +14,11 @@ import {
   Text,
   Flex,
   Button,
+  ButtonGroup,
+  Input
 } from "@chakra-ui/react";
 import { generateDummyData, PaginationData } from "@/utils/data";
-import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
+import { ArrowLeftIcon, ArrowRightIcon, SearchIcon } from "@chakra-ui/icons";
 import { TableData, TableHeader, DataTableProps } from "@/utils/interfaces";
 
 const DataTable: React.FC<DataTableProps> = ({
@@ -28,6 +30,7 @@ const DataTable: React.FC<DataTableProps> = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState("asc");
+
 
   const handleSort = () => {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
@@ -60,11 +63,6 @@ const DataTable: React.FC<DataTableProps> = ({
   };
 
   return (
-    <Box padding="2">
-      <Flex align="center" justify="space-between">
-        <Heading>Results</Heading>
-        <Button bg="#d4e9fa">Filter</Button>
-      </Flex>
       <Box mt="2">
         <TableContainer
           overflowX="hidden"
@@ -119,7 +117,7 @@ const DataTable: React.FC<DataTableProps> = ({
                 variant="outline"
               ></Button>
               <span>
-                {currentPage} - {totalPages}
+                Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
               </span>
               <Button
                 rightIcon={<ArrowRightIcon />}
@@ -130,7 +128,6 @@ const DataTable: React.FC<DataTableProps> = ({
           )}
         </TableContainer>
       </Box>
-    </Box>
   );
 };
 

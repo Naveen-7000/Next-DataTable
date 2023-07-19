@@ -64,3 +64,22 @@ export const generateDummyData = (): TableData[] => {
 
   return dummyData;
 };
+
+
+
+export const PaginationData = (data: TableData[], currentPage : number, pagination:boolean | undefined) => {
+
+  const entriesPerPage = 8;
+  const indexOfLastEntry = currentPage * entriesPerPage;
+  const indexOfFirstEntry = indexOfLastEntry - entriesPerPage;
+  if(pagination){
+      const currentEntries = data.slice(
+        indexOfFirstEntry,
+        indexOfLastEntry
+        );
+        const totalPages = Math.ceil(data.length / entriesPerPage);
+      return {currentEntries, totalPages};
+    }
+
+    return {currentEntries:data, totalPages:0};
+}
